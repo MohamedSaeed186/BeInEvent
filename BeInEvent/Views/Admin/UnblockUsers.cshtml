@@ -1,0 +1,30 @@
+﻿@using BeInEvent.Models;
+@model  ApplicationUser
+@{
+    ViewBag.Title = "BlockUsers";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    List<ApplicationUser> users = ViewBag.users;
+}
+@*@{
+        List<object> user = new List<object>();
+        foreach(var item in ViewBag.users)
+        {
+            user.Add(item);
+        }
+    }*@
+
+
+
+<table>
+    @foreach (var item in users)
+    {
+        <tr>
+            <td></td>
+            <td>@item.UserName</td>
+            <td>@Html.ActionLink("UnBlock", "UnBlocked", new { id = item.Id })</td>
+
+        </tr>
+    }
+
+</table>
+

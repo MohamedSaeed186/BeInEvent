@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TicketType>
+@{
+    IEnumerable<TicketType> ticketType = ViewBag.tickettypes;
+    int eventid = ViewBag.id;
+    //SelectList typ = ViewBag.tickype;
+}
+
+
+
+<div class="pricing-table-area ptb100 text-center">
+    <div class="container">
+        <div class="row">
+
+           
+    <form method="post" action="/Events/buyticket">
+            @foreach (TicketType tickettypes in ViewBag.tickettypes)
+            {
+                    <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-12">
+                        <div class="single-pricing-table shadow-box pt50">
+                            <div class="price-tag uppercase"> <span>@tickettypes.TicketPrice$</span> </div>
+                            <p></p>
+                            <h4 class="uppercase mb40">@tickettypes.TypeOfTicket</h4>
+                            <div class="adv-area">
+                                @Html.TextBox(tickettypes.TicketTypeId.ToString())
+
+                               
+
+
+                            </div>
+                        </div>
+                    </div>
+
+              }
+
+       
+                    <div class="form-group col-md-12">
+                        <input type="submit" value="Buy Tickets" class="btn btn-success" />
+                    </div>
+       
+    </form>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- pricing table area end -->

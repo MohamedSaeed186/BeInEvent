@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BeInEvent.Models.Ticket>
+
+@{
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+    <!--  <table class="table table-bordered table-striped table-hover">
+          <tr>
+              <th>
+                  @Html.DisplayNameFor(model => model.TicketType.TypeOfTicket)
+              </th>
+              <th>
+                  @Html.DisplayNameFor(model => model.TicketType.TicketPrice)
+              </th>
+              <th>
+                  @Html.DisplayNameFor(model => model.Event_Ticket.EventName)
+              </th>
+
+              <th></th>
+       @foreach (var item in Model)
+          {
+              if (item != null)
+              {
+              <tr>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.TicketType.TypeOfTicket)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.TicketType.TicketPrice)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Event_Ticket.EventName)
+                  </td>
+
+              </tr>
+              }
+          }
+
+      </table> -->
+    <!--about area are start-->
+ 
+    <!--about area are end-->
+   @foreach ( var item in Model)
+    {
+        if (item != null)
+        {
+<div class="about-area ptb100 fix" id="about-event">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="about-left">
+                    <div class="about-top">
+                        <h1 class="section-title">Ticket Details</h1>
+                        <div class="total-step">
+                            <div class="descp">
+                                <h2 class="sub-title">Ticket Type</h2>
+                                <div class="descp">
+                                    <p>@item.TicketType.TypeOfTicket</p>
+                                </div>
+                                <h2 class="sub-title">Ticket Price</h2>
+                                <div class="descp">
+                                    <p>@item.TicketType.TicketPrice</p>
+                                </div>
+                                <h2 class="sub-title">Event Name</h2>
+                                <div class="descp">
+                                    <p>@item.Event_Ticket.EventName</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <h3>Number of booked tickets</h3>
+                <div class="about-right">
+                    @item.NuOfUserTicket
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        }
+    }

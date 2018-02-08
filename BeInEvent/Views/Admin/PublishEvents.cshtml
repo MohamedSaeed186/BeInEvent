@@ -1,0 +1,170 @@
+﻿@model IEnumerable<BeInEvent.Models.Event>
+@{
+    ViewBag.Title = "PublishEvents";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+
+<div class="about-area ptb100 fix" id="about-event">
+    <div class="container">
+        <div class="panel-group" id="panelparent">
+
+            @foreach (var item in Model)
+            {
+                <div class="panel">
+                    <div class="panel-heading alert alert-info">
+                        <a href="#" data-toggle="collapse" data-target="#@item.EventID" data-parent="#panelparent">@item.EventName</a>
+                    </div>
+                    <div class="collapse" id="@item.EventID">
+                        <div class="panel-body">
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="about-left">
+                                        <div class="about-top ">
+                                            <h1 class="section-title">Event Name</h1>
+                                            <div class="total-step">
+                                                <div class="descp">
+                                                    <p>@item.EventName</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h1 class="section-title">Event's Details</h1>
+                                        <div class="total-step">
+                                            @*<div class="about-step">
+                                <h2 class="sub-title">1st Stape to gather</h2>
+                                <div class="descp">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page.</p>
+                                </div>
+                            </div>*@
+                                            <div class="about-step ">
+                                                @*<h2 class="sub-title">2nd Stape to Create won way</h2>*@
+                                                <div class="descp  ">
+                                                    <p>@item.Description</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Trigger the modal with a button -->
+                                        <h1 class="section-title"></h1>
+
+                                        
+                                            <div>
+                                                <img src="~/images/@item.Image" style="height:200px;" class="img-rounded" />
+                                            </div>
+                                        
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="about-right">
+
+                                        <ul>
+                                            <li>
+                                                <i class="fa fa-calendar-check-o"> </i>@item.StartDate.ToString("MMM d, yyyy")
+                                                &emsp;&emsp;&emsp;<i class="fa fa-clock-o"></i>@item.StartDate.ToShortTimeString()
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-calendar-times-o"> </i>@item.EndDate.ToString("MMM d, yyyy")
+                                                &emsp;&emsp;&emsp;<i class="fa fa-clock-o"></i>@item.EndDate.ToShortTimeString()
+                                            </li>
+
+                                            <li><i class="glyphicon glyphicon-map-marker"></i>@item.Address, @item.PublisherUser.User_City.CityName</li>
+                                            <li><i class="fa fa-ticket"></i>@item.NumberOfTickets Tickets</li>
+                                            <li><i class="fa fa-hashtag"></i>@item.newCategory.CategoryName</li>
+
+
+                                            @*<li> @Html.ActionLink("Publish", "Publish", new { id = item.EventID }, new { @class = "btn-def bnt-2" })</li>*@
+                                        </ul>
+                                        <div>
+@Html.ActionLink("Publish", "Publish", new { id = item.EventID }, new { @class = "btn-def bnt-2" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-6 col-sm-6 col-xs-12">
+                    @if (item.Image != null)
+                    {
+                        <img src="~/images/@item.Image" />
+                    }
+                </div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+
+    </div>
+    </div>
+
+
+    @*@foreach (var item in Model)
+            {
+
+
+        <div class="about-area ptb100 fix" id="about-event">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="about-left">
+                            <div class="about-top">
+                                <h1 class="section-title">Event Name</h1>
+                                <div class="total-step">
+                                    <div class="descp">
+                                        <p>@item.EventName</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h1 class="section-title">Event's Details</h1>
+                            <div class="total-step">
+                                <div class="about-step">
+                                    <div class="descp">
+                                        <p>@item.Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="about-right">
+
+                            <ul>
+                                <li>
+                                    <i class="fa fa-calendar-check-o"> </i>@item.StartDate.ToString("MMM d, yyyy")
+                                    &emsp;&emsp;&emsp;<i class="fa fa-clock-o"></i>@item.StartDate.ToShortTimeString()
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar-times-o"> </i>@item.EndDate.ToString("MMM d, yyyy")
+                                    &emsp;&emsp;&emsp;<i class="fa fa-clock-o"></i>@item.EndDate.ToShortTimeString()
+                                </li>
+
+                                <li><i class="glyphicon glyphicon-map-marker"></i>@item.Address, @item.PublisherUser.User_City.CityName</li>
+                                <li><i class="fa fa-ticket"></i>@item.NumberOfTickets Tickets</li>
+                                <li><i class="fa fa-hashtag"></i>@item.newCategory.CategoryName</li>
+                                <br />
+
+                                <li> @Html.ActionLink("Publish", "Publish", new { id = item.EventID }, new { @class = "btn-def bnt-2" })</li>
+                            </ul>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6 col-sm-6 col-xs-12">
+                            @if (item.Image != null)
+                            {
+                                <img src="~/images/@item.Image" />
+                            }
+                        </div>*@
+
+                @*</div>
+            </div>
+
+        </div>*@
+
+
+
+    @*}*@
+
+    <!--about area are end-->

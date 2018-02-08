@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BeInEvent.Models.UserSubscribeEvent>
+    
+<div>
+    @{
+        IEnumerable<ApplicationUser> userNames = ViewBag.allusers;
+        ApplicationUser[] Users = userNames.ToArray();
+
+        IEnumerable<UserSubscribeEvent> UsersubscribeEvent = ViewBag.Usersubscribe;
+        UserSubscribeEvent[] UsersubscribeEvents = UsersubscribeEvent.ToArray();
+
+
+
+    }
+
+    <div class="comments-area">
+        <h3 class="aside-title uppercase">@ViewBag.counter Comments</h3>
+        <div class="comments-body">
+            <ul>
+                
+                @for (int i = 0; i < Users.Count(); i++)
+                {
+                  <li class="signle-comments">
+
+                        <div class="commets-text">
+                            <h3>@Users[i].UserName</h3>
+                            <p>@UsersubscribeEvents[i].FeedBack</p>
+                        </div>
+                    </li>
+                }
+
+               
+                </ul>
+            </div>
+                
+            </div>
+
+
+    
+
+            </div>

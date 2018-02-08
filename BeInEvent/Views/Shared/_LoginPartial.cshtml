@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNet.Identity
+<style>
+
+    .dropdown-menu{
+
+        background-color:rgb(128, 128, 128);
+    }
+    .dropdown-menu a{
+        padding-left:10px;
+    }
+
+</style>
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @* @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @User.Identity.GetUserName()
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               
+                            @Html.ActionLink("Create Event", "Create", "User")<br />
+                            @Html.ActionLink("Published Event", "getUserPublishedEvents", "UserEvents")<br />
+                            @Html.ActionLink("Subscribed Event", "getUserSubscribedEvents", "UserEvents")<br />
+                            @Html.ActionLink("Booked Ticket", "GetUserTickets", "UserEvents")<br />
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Admin", "Index", "Admin")<br />
+
+                        }
+
+            </div>
+            </div>
+
+            </li>
+            &emsp;
+            &emsp;
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+
+        <li>
+            <div class="register"> <i class="zmdi zmdi-accounts-add"></i>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</div>
+            &emsp;
+            &emsp;
+
+        </li>
+        
+        <li>
+            <div class="login"><i class="zmdi zmdi-account"></i>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) </div>
+
+        </li>
+    </ul>
+}

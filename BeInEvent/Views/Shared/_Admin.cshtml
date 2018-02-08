@@ -1,0 +1,179 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Admin </title>
+    <!-- all css here -->
+    <!-- bootstrap v3.3.6 css -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="~/css/animate.css">
+    <!-- meanmenu css -->
+    <link rel="stylesheet" href="~/css/meanmenu.min.css">
+    <!-- owl.carousel css -->
+    <link rel="stylesheet" href="~/css/owl.carousel.css">
+    <!-- icofont css -->
+    <link rel="stylesheet" href="~/css/icofont.css">
+    <!-- font-awesome css -->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <!-- Nivo css -->
+    <link rel="stylesheet" href="~/css/nivo-slider.css">
+    <!-- animaton text css -->
+    <link rel="stylesheet" href="~/css/animate-text.css">
+    <!-- Metrial iconic fonts css -->
+    <link rel="stylesheet" href="~/css/material-design-iconic-font.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <!-- responsive css -->
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <!-- color css -->
+    <link href="~/css/color/skin-default.css" rel="stylesheet">
+
+    <!-- modernizr css -->
+    <script src="~/js/vendor/modernizr-2.8.3.min.js"></script>
+    
+    @Styles.Render("~/bundles/vendor")
+
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="">@User.Identity.GetUserName()</a>
+        &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp;  &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp;  &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp;  &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp;  &emsp;&emsp; &emsp;   &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp;  &emsp; @Html.ActionLink("Home","Index","Home") &emsp;&emsp;&emsp; &emsp;&emsp;
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+        @Html.AntiForgeryToken()
+
+        
+            
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        
+        }
+
+
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePagess" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">DashBoard</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePagess">
+                        <li>
+                            @Ajax.ActionLink("New Events", "PublishEvents", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+ 
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("New Messages", "Message", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+
+
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Admin</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+                        <li>
+                            @Ajax.ActionLink("Add Admin", "Create", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Delete Admin", "Delete", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+
+
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages2" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Category</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages2">
+                        <li>
+                            @Ajax.ActionLink("Add Category", "Createcat", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+
+
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Delete Category", "Deletecat", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+
+
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages1" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">City</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages1">
+                        <li>
+                            @Ajax.ActionLink("Add City", "Createcity", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Delete City", "Deletecity", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages3" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Users</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages3">
+                        <li>
+                            @Ajax.ActionLink("Block", "BlockUsers", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+
+
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Un Block", "UnblockUsers", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "content-wrapper" })
+
+
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+            
+           
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        @RenderBody()
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        @*<footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Your Website 2017</small>
+                </div>
+            </div>
+        </footer>*@
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        
+       
+        @*@Scripts.Render("~/bundles/fvendor")*@
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+    </div>
+</body>
+</html>

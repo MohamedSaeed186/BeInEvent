@@ -1,0 +1,20 @@
+﻿@using BeInEvent.Models
+@model ApplicationUser
+@{ 
+    Layout = "~/Views/Shared/_Admin.cshtml";
+
+    SelectList admin = ViewBag.admin;
+}
+@if (admin.Count() != 0)
+{
+<div style="margin:20px">
+@using (Html.BeginForm("delete", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.DropDownListFor(a => Model.Id, admin as SelectList, new { })
+    <input type="submit" value="Remove" />
+}
+</div>
+}
+else{ 
+<h1>no admin to remove</h1>
+}

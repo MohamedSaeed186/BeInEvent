@@ -1,0 +1,160 @@
+﻿@using BeInEvent.Models;
+@model Event
+@{
+    ViewBag.Title = "eachevent";
+    var sub = ViewBag.sub;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<!--  breadcumb-area start-->
+<div class="breadcumb-area bg-overlay">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Events","events")</li>
+            <li class="active">Event-details</li>
+        </ol>
+    </div>
+</div>
+<!--  breadcumb-area end-->
+<!--about area are start-->
+<div class="about-area ptb100 fix" id="about-event">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="about-left">
+                    <div class="about-top ">
+                        <h1 class="section-title">Event Name</h1>
+                        <div class="total-step">
+                            <div class="descp">
+                                <p>@Model.EventName</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="section-title">Event's Details</h1>
+                    <div class="total-step" >
+                        @*<div class="about-step">
+                            <h2 class="sub-title">1st Stape to gather</h2>
+                            <div class="descp">
+                                <p>It is a long established fact that a reader will be distracted by the readable content of a page.</p>
+                            </div>
+                        </div>*@
+                        <div class="about-step " >
+                            @*<h2 class="sub-title">2nd Stape to Create won way</h2>*@
+                            <div class="descp  ">
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                    <!-- Trigger the modal with a button -->
+                    <h1 class="section-title"></h1>
+
+                    <div>
+                        <div>
+                            <img src="~/images/@Model.Image" data-toggle="modal" data-target="#myModal" style="cursor: pointer;height:200px;" class="img-rounded" />
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">@Model.EventName</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/images/@Model.Image" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <br /><br />
+                @if (sub == 1)
+                {
+                    using (Html.BeginForm("feedback", "events", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {@Html.HiddenFor(Model => Model.EventID)
+
+                        @Html.TextAreaFor(Model => Model.userEventSubscribEvent.FeedBack)
+                        <input type="submit" value="Send FeedBack" />
+                    }
+                }
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="about-right">
+                    
+                            <ul>
+                                <li>
+                                    <i class="fa fa-calendar-check-o"> </i>@Model.StartDate.ToString("MMM d, yyyy")
+                                    &emsp;&emsp;&emsp;<i class="fa fa-clock-o"></i>@Model.StartDate.ToShortTimeString()
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar-times-o"> </i>@Model.EndDate.ToString("MMM d, yyyy")
+                                    &emsp;&emsp;&emsp;<i class="fa fa-clock-o"></i>@Model.EndDate.ToShortTimeString()
+                                </li>
+
+                                <li><i class="glyphicon glyphicon-map-marker"></i>@Model.Address, @Model.PublisherUser.User_City.CityName</li>
+                                <li><i class="fa fa-ticket"></i>@Model.NumberOfTickets Tickets</li>
+                                <li><i class="fa fa-hashtag"></i>@Model.newCategory.CategoryName</li>
+                            </ul>
+                          @if(Model.TicketType.Count()!=0)
+                          { <div> @Ajax.ActionLink("Book Now", "buyticket",new {id=Model.EventID},new AjaxOptions() {
+                                 UpdateTargetId= "tckt",
+                                 InsertionMode=InsertionMode.Replace
+
+
+                             }, new { @class = "btn-def bnt-2" })
+
+                            </div>
+                            }
+                          @if (sub==0)
+                          {
+                          @Html.ActionLink("Subsrcibe", "subscribe", new { id = Model.EventID }, new { @class = "btn btn-primary" })
+
+                          }
+                          else
+                    {
+                    @Html.ActionLink("UnSubsrcibe", "unsubscribe", new { id = Model.EventID }, new { @class = "btn btn-primary" })
+                              <br /><br />
+                            @Ajax.ActionLink("See Feedbacks", "getFeedbacks", new { id = Model.EventID }, new AjaxOptions()
+                       {
+                           UpdateTargetId = "feedback",
+                           InsertionMode = InsertionMode.Replace
+
+
+                       }, new { @class = "btn-def bnt-2" })
+                          }
+                </div>
+
+                
+                    </div>
+          
+                </div>
+
+       
+
+
+    </div>
+</div>
+<div>
+   
+</div>
+<div>@ViewBag.result</div>
+<div id="tckt"></div>
+<div id="feedback"></div>
+
+
+<!--about area are end-->
+@section scripts{
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}

@@ -1,0 +1,144 @@
+﻿@model IEnumerable<BeInEvent.Models.Event>
+
+@{
+    Layout = null;
+}
+@{ 
+    IEnumerable<BeInEvent.Models.Event> SubscribedEventt = ViewBag.SubscribedEvents as IEnumerable<BeInEvent.Models.Event>;
+}
+    <title>getUserEvents</title>
+<!-- all css here -->
+<!-- bootstrap v3.3.6 css -->
+<link rel="stylesheet" href="~/EventsStyle/css/bootstrap.min.css">
+<!-- animate css -->
+<link rel="stylesheet" href="~/EventsStyle/css/animate.css">
+<!-- meanmenu css -->
+<link rel="stylesheet" href="~/EventsStyle/css/meanmenu.min.css">
+<!-- owl.carousel css -->
+<link rel="stylesheet" href="~/EventsStyle/css/owl.carousel.css">
+<!-- icofont css -->
+<link rel="stylesheet" href="~/EventsStyle/css/icofont.css">
+<!-- Nivo css -->
+<link rel="stylesheet" href="~/EventsStyle/css/nivo-slider.css">
+<!-- animaton text css -->
+<link rel="stylesheet" href="~/EventsStyle/css/animate-text.css">
+<!-- Metrial iconic fonts css -->
+<link rel="stylesheet" href="~/EventsStyle/css/material-design-iconic-font.min.css">
+<!-- style css -->
+<link rel="stylesheet" href="~/EventsStyle/style.css">
+<!-- responsive css -->
+<link rel="stylesheet" href="~/EventsStyle/css/responsive.css">
+<!-- color css -->
+<link href="~/EventsStyle/css/color/skin-default.css" rel="stylesheet">
+
+<!-- modernizr css -->
+<script src="~/EventsStyle/js/vendor/modernizr-2.8.3.min.js"></script>
+<br />
+<br />
+<br />
+ <br />
+  <table>
+      <tr>
+          @foreach (var item in Model)
+          {
+        <!--about area are start-->
+              <div class="about-area ptb100 fix" id="about-event">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                              <div class="about-left">
+                                  <div class="about-top">
+                                      <h1 class="section-title">@item.PublisherUser.UserFirstName Event</h1>
+                                      <h1 class="section-title">About Event</h1>
+                                      
+                                      <div class="total-step">
+                                          <div class="descp">
+                                              <p>@item.Description</p>
+
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <h1 class="section-title"> </h1>
+                                  <h1 class="section-title">Detail Event</h1>
+                                  <div class="total-step">
+                                      <div class="about-step ">
+                                          <ul>
+                                              <li><i class="zmdi zmdi-pin"></i>@item.EventName</li>
+                                              <br />
+                                              <li><i class="zmdi zmdi-calendar-note"></i>@item.StartDate</li>
+                                              <br />
+                                              <li><i class="zmdi zmdi-pin"></i>@item.Address</li>
+                                              <br />
+                                              <li><i class="zmdi zmdi-accounts"></i>@item.NumberOfTickets  Seats for followers</li>
+
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4 col-xs-12">
+                              <div class="about-right">
+                                  <img src="~/images/@item.Image"/>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          }
+      </tr>
+</table>
+<!--about area are end-->
+
+
+<table>
+   
+    <tr>
+    @foreach (var item in SubscribedEventt)
+    {
+    <!--about area are start-->
+        <div class="about-area ptb100 fix" id="about-event">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="about-left">
+                            <div class="about-top">
+                                <h1 class="section-title"> Subcription Event</h1>
+                                    <h1 class="section-title">About Event</h1>
+                                    <div class="total-step">
+                                        <div class="descp">
+                                            <p>@item.Description</p>
+
+                                        </div>
+                                    </div>
+</div>
+                            <h1 class="section-title">Detail Event</h1>
+                            <div class="total-step">
+                                <div class="about-step">
+                                    <ul>
+                                        <li><i class="zmdi zmdi-pin"></i>@item.EventName</li>
+                                        <br />
+                                        <li><i class="zmdi zmdi-calendar-note"></i>@item.StartDate</li>
+                                        <br />
+                                        <li><i class="zmdi zmdi-pin"></i>@item.Address</li>
+                                        <br />
+                                        <li><i class="zmdi zmdi-accounts"></i>@item.NumberOfTickets  Seats for followers</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="about-right">
+                            <img src="~/images/@item.Image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </tr>
+</table>
+<!--about area are end-->

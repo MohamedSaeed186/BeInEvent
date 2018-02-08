@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BeInEvent.Models.Event>
+
+@{
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /><br />
+<br />
+<br />
+
+<div id="divOne" class="container">
+    @if (Model.Count() != 0)
+    {
+    <table class="table table-bordered table-condensed table-hover">
+        <tr>
+            <th>Event Name</th>
+            <th>Details</th>
+
+        </tr>
+
+        @foreach (var events in Model)
+        {
+            <tr>
+                <td>@events.EventName</td>
+                <td>@Html.ActionLink("More", "eachevent", "Events", new { id = events.EventID }, new { @class = "btn-def bnt-2" })</td>
+
+            </tr>
+        }
+
+
+
+    </table>
+    }
+    else{ 
+    <h1>
+        no subscriped event founded
+    </h1>
+    }
+</div>
+
+<br />
+<br />
+<br />
+<br /><br />
+<br /><br />
+<br />
+<br /><br />
+<br />
+<br />

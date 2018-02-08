@@ -1,0 +1,81 @@
+﻿@model BeInEvent.Models.TicketType
+@{
+    TempData.Peek("evid");
+    var c = ViewBag.NoOfTickets;
+}
+<div class="container">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>TicketType</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeOfTicket, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TypeOfTicket, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TypeOfTicket, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TicketPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TicketPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TicketPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NOTicketType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NOTicketType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NOTicketType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+                <br /><br />
+                @if (ViewBag.error == 0)
+                {
+                    <div class="container">
+                        <p class="alert alert-success">
+                           Success :D 
+                            <span class="close" data-dismiss="alert">&times;</span>
+                        </p>
+                    </div>
+                }
+                @if (ViewBag.error == 1)
+                {
+                    <div class="container">
+                        <p class="alert alert-warning">
+                            Error , Because the number of tickets exceeds the available number!!
+                            <span class="close" data-dismiss="alert">&times;</span>
+                        </p>
+                        </div>
+                        }
+               
+                    </div>
+        </div>
+    }
+    <br />
+
+    <div>
+        @Html.ActionLink("Back to List", "Index","Home")
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+</div>

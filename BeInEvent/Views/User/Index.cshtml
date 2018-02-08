@@ -1,0 +1,41 @@
+﻿<div>
+    @Ajax.ActionLink("Create New Event", "Create", new AjaxOptions()
+   {
+
+       UpdateTargetId = "d",
+       InsertionMode = InsertionMode.Replace
+   });
+
+
+</div>
+
+
+
+<div>
+    @Ajax.ActionLink("Create TicketType", "TicketType", new AjaxOptions()
+{
+
+    UpdateTargetId = "d",
+    InsertionMode = InsertionMode.Replace
+});
+
+
+</div>
+
+
+
+
+<div id="d">
+
+</div>
+
+@section myscript{
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Models/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/Models/Scripts/jquery.validate.min.js"></script>
+
+}
+
+

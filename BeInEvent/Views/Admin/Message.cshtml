@@ -1,0 +1,34 @@
+﻿@using BeInEvent.Models
+@model IEnumerable<Message>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+
+<div class="container ">
+    <table class="table table-hover table-responsive table-bordered" style="margin:50px">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Mail</th>
+                <th>Message Detaile</th>
+                <th>Replay</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@m.index</td>
+                    <td>@m.Email</td>
+                    <td>@m.ReportMessage</td>
+                    <td>@Html.ActionLink("Replay", "Replay", new { id = @m.index }, new { @class = "btn btn-info" })</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

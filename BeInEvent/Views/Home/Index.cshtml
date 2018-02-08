@@ -1,0 +1,305 @@
+﻿@using BeInEvent.Models
+@model IEnumerable<Event>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<Event> every = ViewBag.every;
+    IEnumerable<Category> selectCategory = ViewBag.currentCategory as IEnumerable<Category>;
+}
+<style>
+    .carousel-inner > .item > img {
+        width: 100%;
+        height: 600px;
+    }
+</style>
+<div class="jumbotron text-center">
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        @*<table class="table table-hover table-bordered">
+
+                <tr>
+                    <th colspan="3">Upcoming Events</th>
+                </tr>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Description</th>
+                    <th>Tickets</th>
+                </tr>
+                @foreach (Event e in Model)
+                {
+                    <tr>
+                        <td>@e.EventName</td>
+                        <td>@e.Description</td>
+                        <td>@Html.ActionLink("View Details", "Detail", null, new { @class = "btn btn-success" })</td>
+                    </tr>
+                }
+
+                <tr></tr>
+            </table>*@
+
+        <div class="carousel slide" id="mycarousel" data-ride="carousel" data-interval="1500">
+            <div>
+                <ul class="carousel-indicators">
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        <li data-slide-to="@i" data-target="#mycarousel"></li>
+                    }
+
+                </ul>
+            </div>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="~/Images/0Lighthouse.jpg" />
+                    <p class="carousel-caption"></p>
+                </div>
+
+                @foreach (Event e in Model)
+                {
+                    <div class="item">
+                        <img src="~/images/@e.Image" />
+                        <a href="/events/eachevent/@e.EventID">
+                            <p class="carousel-caption">@e.EventName</p></a>
+                            @*<a href="/events/eachevent/@e.EventID" class="btn btn-primary">view</a>*@
+</div>
+                }
+
+            </div>
+
+            <a href="#mycarousel" class="carousel-control left" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a href="#mycarousel" class="carousel-control right" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+
+        <br /><br /><br />
+
+        <div class="main-blog-area ptb100 fix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-5 col-xs-12">
+                        <div class="total-widget">
+                            <div class="single-widget catagory-widget">
+                                <h3 class="aside-title uppercase col-lg-12">Categories</h3>
+                                <ul>
+                                    @foreach (var item in selectCategory)
+                                    {
+                                        <li>
+                                            @Ajax.ActionLink(item.CategoryName, "FilterByCategory", new { id = item.CategoryID },
+                                                    new AjaxOptions()
+                                                    {
+                                                        UpdateTargetId = "divOne",
+                                                        InsertionMode = InsertionMode.Replace
+                                                    })
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="#divOne">
+                        <div class="blog-body">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="single-news single-news-02">
+                                        <div id="divOne">
+                                            <table class="table table-bordered table-condensed table-hover">
+                                                <tr>
+                                                    <th>Event Name</th>
+                                                    <th>Event Description</th>
+                                                    <th>Number Of Tickets</th>
+
+
+                                                </tr>
+
+                                                @foreach (var events in every)
+                                                {
+                                                    <tr>
+                                                        <td>@events.EventName</td>
+                                                        <td>@events.Description</td>
+                                                        <td>@events.NumberOfTickets</td>
+
+                                                    </tr>
+                                                }
+
+
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            @*<div class="col-md-9 col-sm-7 col-xs-12">
+                                    <div class="blog-body">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                @foreach (var item in every)
+                                                {
+                                                <div class="single-news single-news-02">
+                                                    <div class="news-img animate-eff">
+                                                        <a href="#"><img src="~/img/blog/blog-03.jpg" alt=""></a>
+                                                    </div>
+                                                    <div class="news-contant">
+                                                        <h3 class="uppercase"></h3>
+                                                        <p>Post-by :<a href="#"> @item.PublisherUser</a> </p>
+                                                        <div class="news-bottom shadow-box">
+                                                            <a href="#"><i class="zmdi zmdi-favorite-outline"></i>7 Like</a>
+                                                            <a href="#"><i class="zmdi zmdi-comment-text"></i>9 Comment</a>
+                                                            <a class="read-more" href="single-blog.html">Read More</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <!--                                      -->
+                            @*<table>
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Filter
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                @foreach (var c in selectCategory)
+                                                {
+
+
+                                                    @Ajax.ActionLink(@c.CategoryName, "FilterByCategory", new { id = @c.CategoryID },
+                                                                          new AjaxOptions()
+                                                                          {
+                                                                              UpdateTargetId = "divOne",
+                                                                              InsertionMode = InsertionMode.Replace
+                                                                          }, new { @class = "btn btn-success " })
+                                                    <br />
+
+                                }
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+
+                                                </tr>
+
+
+                                            </table>
+
+                                            <div id="divOne">
+                                                <table class="table table-bordered table-condensed table-hover">
+                                                    <tr>
+                                                        <th>Event Name</th>
+                                                        <th>Details</th>
+
+                                                    </tr>
+
+                                                    @foreach (var events in every)
+                                                    {
+                                        <tr>
+                                            <td>@events.EventName</td>
+                                            <td>@Html.ActionLink("More", "eachevent", "Events", new { id = events.EventID }, new { @class = "btn-def bnt-2" })</td>
+
+                                        </tr>
+                                                    }
+
+
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+
+
+                            <!--map area start-->
+                            <div id="contact" class="map-area mt100">
+
+                                <div class="map-content" style="background-color:black">
+                                    <div class="content-body" style="background-color:black">
+                                        <form id="contact-form" method="post" action="/home/Submit">
+                                            <div class="input-box" style="background-color:black">
+                                                <input type="email" placeholder="E-mail*" class="info" name="email">
+                                                <textarea class="area-text" style="background-color:black" placeholder="Message" name="message"></textarea>
+                                            </div>
+                                            <p class="form-messege style=" background-color:black""></p>
+                                            <div class="input-box upload-box " style="background-color:black">
+                                                <input type="submit" value="Submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--map area end-->
+
+
+
+                            <div class="information-area off-white ptb100" style="margin-top:250px;">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="single-information text-center">
+                                                <div class="info-icon">
+                                                    <i class="zmdi zmdi-phone"></i>
+                                                </div>
+                                                <h4>Phone</h4>
+                                                <p>+ (0192) 5184203</p>
+                                                <p>+ (0185) 0950555</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="single-information text-center">
+                                                <div class="info-icon">
+                                                    <i class="zmdi zmdi-email-open"></i>
+                                                </div>
+                                                <h4>E-Mail</h4>
+                                                <p><a href="mailto:company@email.com">company@email.com</a></p>
+                                                <p><a href="mailto:we@company.info">we@company.info</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="single-information text-center">
+                                                <div class="info-icon">
+                                                    <i class="zmdi zmdi-city-alt"></i>
+                                                </div>
+                                                <h4>1st Venue</h4>
+                                                <p>555 / 2A Sevent Streth</p>
+                                                <p>Rampura, Bansree.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="single-information text-center">
+                                                <div class="info-icon">
+                                                    <i class="zmdi zmdi-city"></i>
+                                                </div>
+                                                <h4>1st Venue</h4>
+                                                <p>689 / 2B Sevent Streth</p>
+                                                <p>Rampura, Bansree.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--information area are start-->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+
