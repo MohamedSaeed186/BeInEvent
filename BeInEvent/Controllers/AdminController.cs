@@ -15,7 +15,7 @@ using System.Data.Entity.Validation;
 
 namespace BeInEvent.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
 
     public class AdminController : Controller
     {
@@ -57,7 +57,26 @@ namespace BeInEvent.Controllers
                 _userManager = value;
             }
         }
+        //category update
+        public ActionResult update()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult update(Category model)
+        {
+            if (ModelState.IsValid)
+            {
+                Category cat = db.Categories.Where(n => n.CategoryID == model.CategoryID).FirstOrDefault();
+                if (cat != null)
+                {
+                    cat.CategoryName = model.CategoryName;
+                    db.SaveChanges();
+                }
 
+            }
+            return View();
+        }
         // GET: Admin
         public ActionResult Index()
         {
@@ -83,7 +102,7 @@ namespace BeInEvent.Controllers
 
                 if (result.Succeeded)
                 {
-                   
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -103,15 +122,15 @@ namespace BeInEvent.Controllers
         public ActionResult delete()
         {
             //db.Users.Where(u => u.Roles.First(c => c.RoleId == "2").RoleId == "2")
-            List<ApplicationUser> admins=db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("2")).ToList();
-            SelectList admin = new SelectList(admins, "Id","Email");
+            List<ApplicationUser> admins = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("2")).ToList();
+            SelectList admin = new SelectList(admins, "Id", "Email");
             ViewBag.admin = admin;
             return View();
         }
         [HttpPost]
         public ActionResult delete(ApplicationUser admin)
         {
-            ApplicationUser user = db.Users.FirstOrDefault(n=>n.Id==admin.Id);
+            ApplicationUser user = db.Users.FirstOrDefault(n => n.Id == admin.Id);
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index", "Admin");
@@ -178,7 +197,7 @@ namespace BeInEvent.Controllers
         [HttpGet]
         public ActionResult Createcat()
         {
-            
+
             return View();
         }
 
@@ -246,7 +265,7 @@ namespace BeInEvent.Controllers
             db.SaveChanges();
             return View("Index");
         }
-       
+
         [HttpGet]
         public ActionResult Message()
         {
@@ -293,10 +312,11 @@ namespace BeInEvent.Controllers
 
         public ActionResult BlockUsers()
         {
-            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1")).Where(n => n.userIsBlocked == 0).ToList();
-
+            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1")).ToList();
+            SelectList alluser = new SelectList(users, "Id", "UserName");
             //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 0).ToList();
-            ViewBag.users = users;
+            ViewBag.users = alluser;
+            TempData.Keep();
             //ViewBag.users = db.Users.Where(n => n.userIsBlocked == 0).Select(n => new { n.UserName }).ToList();
             return View();
         }
@@ -304,54 +324,74 @@ namespace BeInEvent.Controllers
 
         public ActionResult Blocked(string id)
         {
-            db.Users.Single(e => e.Id == id).userIsBlocked = 1;
-
-            try
+            ApplicationUser user = db.Users.SingleOrDefault(e => e.Id == id);
+            if (user.userIsBlocked == 0)
             {
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                try
                 {
-                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    user.userIsBlocked = 1;
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
                     {
-                        Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
                     }
                 }
+                TempData["result"] = "User is Blocked";
+            }
+            else
+            {
+                TempData["result"] = "User is already Blocked";
+
             }
             return RedirectToAction("BlockUsers");
+
         }
 
-        public ActionResult UnblockUsers()
-        {
-            //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 1).ToList();
-            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1")).Where(n => n.userIsBlocked == 1).ToList();
+        //public ActionResult UnblockUsers()
+        //{
+        //    //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 1).ToList();
+        //    List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1")).Where(n => n.userIsBlocked == 1).ToList();
 
 
-            ViewBag.users = users;
-            return View();
-        }
-
+        //    ViewBag.users = users;
+        //    return View();
+        //}
+        [HttpPost]
         public ActionResult UnBlocked(string id)
         {
-            db.Users.Single(e => e.Id == id).userIsBlocked = 0;
-
-            try
+            ApplicationUser user = db.Users.SingleOrDefault(e => e.Id == id);
+            if (user.userIsBlocked == 1)
             {
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                try
                 {
-                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    user.userIsBlocked = 0;
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
                     {
-                        Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
                     }
                 }
+                TempData["result"] = "User is unBlocked";
             }
-            return RedirectToAction("UnblockUsers");
+            else
+            {
+                TempData["result"] = "User is already unBlocked";
+
+            }
+            return RedirectToAction("BlockUsers");
+
 
         }
         public ActionResult PublishEvents()

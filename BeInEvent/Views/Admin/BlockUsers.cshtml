@@ -3,27 +3,46 @@
 @{
     ViewBag.Title = "BlockUsers";
     Layout = "~/Views/Shared/_Admin.cshtml";
-    List<ApplicationUser> users = ViewBag.users;
+    SelectList users = ViewBag.users;
+    if (TempData["result"] != null)
+    {
+        ViewBag.result = TempData["result"].ToString();
+    }
 }
-@*@{ 
-    List<object> user = new List<object>();
-    foreach(var item in ViewBag.users)
+@*@{
+        List<object> user = new List<object>();
+        foreach(var item in ViewBag.users)
+        {
+            user.Add(item);
+        }
+    }*@
+<div class="container">
+
+
+    <h2 class="text-center text-info">
+        @ViewBag.result
+
+    </h2>
+    <h2>BlockUsers</h2>
+    @using (Html.BeginForm("Block", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-        user.Add(item);
+        <div class="row">
+            <div class="col-md-4">
+                @Html.DropDownListFor(Model => Model.Id, users as SelectList)
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                <button type="submit" formaction="\Admin\Blocked" class="btn btn-primary">block</button>
+            </div>
+            <div class="col-md-2">
+
+                <button type="submit" formaction="\Admin\UnBlocked" class="btn btn-primary">UnBlocked</button>
+            </div>
+        </div>
+
     }
-}*@
+</div>
 
-<h2>BlockUsers</h2>
-
-<table>
-    @foreach (var item in users )
-    {
-        <tr>
-            <td></td>
-            <td>@item.UserName</td>
-            <td>@Html.ActionLink("Block", "Blocked",new { id=item.Id})</td>
-           
-        </tr>
-    }
-
-</table>
