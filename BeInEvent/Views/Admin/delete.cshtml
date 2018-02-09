@@ -1,20 +1,36 @@
 ﻿@using BeInEvent.Models
 @model ApplicationUser
-@{ 
+@{
     Layout = "~/Views/Shared/_Admin.cshtml";
 
-    SelectList admin = ViewBag.admin;
+    SelectList users = ViewBag.users;
+    if (TempData["result"] != null)
+    {
+        ViewBag.result = TempData["result"].ToString();
+    }
 }
-@if (admin.Count() != 0)
-{
-<div style="margin:20px">
-@using (Html.BeginForm("delete", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.DropDownListFor(a => Model.Id, admin as SelectList, new { })
-    <input type="submit" value="Remove" />
-}
+<div class="container">
+
+
+    <h2 class="text-center text-info">
+        @ViewBag.result
+
+    </h2>
+    @using (Html.BeginForm("delete", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                @Html.DropDownListFor(Model => Model.Id, users as SelectList)
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-2 col-md-offset-3">
+                <input type="submit" value="Remove Admin" class="btn btn-primary" />
+            </div>
+
+        </div>
+
+    }
 </div>
-}
-else{ 
-<h1>no admin to remove</h1>
-}

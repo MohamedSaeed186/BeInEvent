@@ -15,7 +15,10 @@ using System.Data.Entity.Validation;
 
 namespace BeInEvent.Controllers
 {
+
+
     [Authorize(Roles = "Admin")]
+
 
     public class AdminController : Controller
     {
@@ -85,55 +88,74 @@ namespace BeInEvent.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1")).ToList();
+            SelectList alluser = new SelectList(users, "Id", "UserName");
+            //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 0).ToList();
+            ViewBag.users = alluser;
+            TempData.Keep();
+            //ViewBag.users = db.Users.Where(n => n.userIsBlocked == 0).Select(n => new { n.UserName }).ToList();
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(AdminViewModel model)
+        public ActionResult Create(ApplicationUser model)
         {
+            ApplicationUser user = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1") && x.Id == model.Id).FirstOrDefault();
+            // ApplicationUser user= db.Users.FirstOrDefault(m => m.Id == model.Id);
 
-            if (ModelState.IsValid)
+            if (user != null)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                user.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole() { RoleId = "2", UserId = user.Id });
-
-
-
-                var result = await UserManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Admin");
-                }
-                AddErrors(result);
+                UserManager.RemoveFromRole(model.Id, "User");
+                UserManager.AddToRole(model.Id, "Admin");
+                db.SaveChanges();
+                TempData["result"] = "Member Is Added to Be Admin Now";
             }
+            else
+            {
+                TempData["result"] = "Member Already Is  Admin";
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            }
+            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("1")).ToList();
+            SelectList alluser = new SelectList(users, "Id", "UserName");
+            //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 0).ToList();
+            ViewBag.users = alluser;
+            return View();
 
         }
         [HttpGet]
         public ActionResult delete()
         {
-            //db.Users.Where(u => u.Roles.First(c => c.RoleId == "2").RoleId == "2")
-            List<ApplicationUser> admins = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("2")).ToList();
-            SelectList admin = new SelectList(admins, "Id", "Email");
-            ViewBag.admin = admin;
+            String ID = User.Identity.GetUserId();
+            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("2") && x.Id != ID).ToList();
+            SelectList alluser = new SelectList(users, "Id", "UserName");
+            //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 0).ToList();
+            ViewBag.users = alluser;
+            TempData.Keep();
+            //ViewBag.users = db.Users.Where(n => n.userIsBlocked == 0).Select(n => new { n.UserName }).ToList();
             return View();
         }
         [HttpPost]
-        public ActionResult delete(ApplicationUser admin)
+        public ActionResult delete(ApplicationUser model)
         {
-            ApplicationUser user = db.Users.FirstOrDefault(n => n.Id == admin.Id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Admin");
+            ApplicationUser user = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("2") && x.Id == model.Id).FirstOrDefault();
+            // ApplicationUser user= db.Users.FirstOrDefault(m => m.Id == model.Id);
+
+            if (user != null)
+            {
+                UserManager.RemoveFromRole(model.Id, "Admin");
+                UserManager.AddToRole(model.Id, "User");
+                db.SaveChanges();
+                TempData["result"] = "Member Is Removed from Being Admin";
+            }
+            else
+            {
+                TempData["result"] = "Member Already Is Not Admin";
+
+            }
+            List<ApplicationUser> users = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains("2")).ToList();
+            SelectList alluser = new SelectList(users, "Id", "UserName");
+            //List<ApplicationUser>users = db.Users.Where(n => n.userIsBlocked == 0).ToList();
+            ViewBag.users = alluser;
+            return View();
 
         }
         #region Helpers
